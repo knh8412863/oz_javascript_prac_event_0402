@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>Timer API</h1>
+
+    <button id="start">카운트다운 시작</button>
+    <p id="time"></p>
+
+    <script>
+        // // setTimeout: 일정 시간이 지난 뒤에 점수를 한 번 실행
+        // function alertTimeout() {
+        //     alert("타임아웃이 종료되었습니다.");
+        // };
+
+        // // 3s = 3000ms
+        // setTimeout(alertTimeout, 3000);
+
+        // 1) 함수 표현식
+
+        // // 2) 화살표 함수
+        // setTimeout(() => alert("타임아웃이 종료되었습니다."), 3000);
+
+
+        // // setInterval(함수, 시간(ms)): 일정 시간마다 함수를 반복 실행
+        // setInterval(() => alert("3초가 경과 되었습니다."), 3000);
+
+        const startBtn = document.querySelector("#start");
+        const timeEl = document.querySelector("#time");
+
+        let timeLeft = 10;
+        let timerId = null;
+
+        // start 버튼에 이벤트 리스너를 추가한다? 
+        startBtn.addEventListener("click", () => {
+            if (timerId !== null) return;
+
+            startBtn.disabled = true;
+
+            // 카운트다운(n초 --> 0초)
+            timeEl.textContent = timeLeft;
+
+            // 1초에 한 번씩 하게 만듦(반복문은 1초마다 깎이는게 아니기 때문에 사용 X)
+            timerId = setInterval(()  => {
+                timeLeft--;
+
+                if (timeLeft === 0) {
+                    // timer 중지
+                    timeEl.textContent = "타이머 종료!"
+                    clearInterval(timerId);
+                    timeLeft = 10;
+                    timerId = null;
+                    startBtn.disabled = false;
+                } else {
+                    // N초(timeLeft >= 0인 경우, 계속 진행)
+                    timeEl.textContent = timeLeft;
+                }   
+            }, 1000);   
+        });
+
+    </script>
+</body>
+</html>
